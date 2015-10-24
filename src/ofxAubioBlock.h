@@ -19,28 +19,18 @@
 */
 
 #pragma once
-
-#include "ofxAubioBlock.h"
 #include <aubio/aubio.h>
-#include <iostream>
 
-using namespace std;
-
-class ofxAubioPitch : public ofxAubioBlock {
-
-    public:
-
-       ofxAubioPitch();
-       ~ofxAubioPitch();
-
-       void setup();
-       void setup(string method, int buf_s, int hop_s, int samplerate);
-
-       float latestPitch;
-       float pitchConfidence;
+class ofxAubioBlock {
 
     protected:
-       void blockAudioIn();
-       // aubio stuff
-       aubio_pitch_t * pitch;
+        uint_t buf_size;
+        uint_t hop_size;
+        uint_t curpos;
+        fvec_t * aubio_input;
+        fvec_t * aubio_output;
+        virtual void blockAudioIn() {};
+
+    public:
+        void audioIn(float *input, int bufferSize, int nChannels);
 };

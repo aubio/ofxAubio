@@ -18,29 +18,24 @@
 
 */
 
-#pragma once
-
 #include "ofxAubioBlock.h"
-#include <aubio/aubio.h>
-#include <iostream>
 
-using namespace std;
-
-class ofxAubioPitch : public ofxAubioBlock {
-
-    public:
-
-       ofxAubioPitch();
-       ~ofxAubioPitch();
-
-       void setup();
-       void setup(string method, int buf_s, int hop_s, int samplerate);
-
-       float latestPitch;
-       float pitchConfidence;
-
-    protected:
-       void blockAudioIn();
-       // aubio stuff
-       aubio_pitch_t * pitch;
-};
+void ofxAubioBlock::audioIn(float * input, int bufferSize, int nChannels)
+{
+    uint_t i, j;
+    for (i = 0; i < bufferSize; i++) {
+        // downmix into aubio_input
+        aubio_input->data[curpos] = 0.;
+        for (j = 0; j < nChannels; j++) {
+            aubio_input->data[curpos] += input[i * nChannels + j];
+        }
+        aubio_input->data[curpos] /= (smpl_t)nChannels;
+        // run aubio block when appropriate
+        curpos += 1;
+        if (curpos == hop_size)
+        {
+            blockAudioIn();
+            curpos = 0;
+        }
+    }
+}

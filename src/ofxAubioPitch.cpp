@@ -58,26 +58,6 @@ ofxAubioPitch::~ofxAubioPitch()
     if (aubio_output) del_fvec(aubio_output);
 }
 
-void ofxAubioPitch::audioIn(float * input, int bufferSize, int nChannels)
-{
-    uint_t i, j;
-    for (i = 0; i < bufferSize; i++) {
-        // downmix into aubio_input
-        aubio_input->data[curpos] = 0.;
-        for (j = 0; j < nChannels; j++) {
-            aubio_input->data[curpos] += input[i * nChannels + j];
-        }
-        aubio_input->data[curpos] /= (smpl_t)nChannels;
-        // run aubio block when appropriate
-        curpos += 1;
-        if (curpos == hop_size)
-        {
-            blockAudioIn();
-            curpos = 0;
-        }
-    }
-}
-
 void ofxAubioPitch::blockAudioIn()
 {
     aubio_pitch_do(pitch, aubio_input, aubio_output);
