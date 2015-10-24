@@ -51,7 +51,10 @@ void ofxAubioPitch::setup(string method, int buf_s, int hop_s, int samplerate)
 
 ofxAubioPitch::~ofxAubioPitch()
 {
-    //if (pitch) del_aubio_pitch(Pitch);
+    ofLogNotice() << "deleted ofxAubioPitch";
+    if (pitch) del_aubio_pitch(pitch);
+    if (aubio_input) del_fvec(aubio_input);
+    if (aubio_output) del_fvec(aubio_output);
 }
 
 void ofxAubioPitch::audioIn(float * input, int bufferSize, int nChannels)
