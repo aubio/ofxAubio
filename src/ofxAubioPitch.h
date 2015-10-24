@@ -47,6 +47,6 @@ class ofxAubioPitch {
        fvec_t * aubio_input;
        fvec_t * aubio_output;
        aubio_pitch_t * pitch;
-       sint_t curpos;
+       uint_t curpos;
 
 };

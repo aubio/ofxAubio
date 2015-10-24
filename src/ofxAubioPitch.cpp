@@ -61,16 +61,16 @@ void ofxAubioPitch::audioIn(float * input, int bufferSize, int nChannels)
         // downmix into aubio_input
         aubio_input->data[curpos] = 0.;
         for (j = 0; j < nChannels; j++) {
-            aubio_input->data[curpos] += input[ (curpos + i) * nChannels + j];
+            aubio_input->data[curpos] += input[i * nChannels + j];
         }
-        aubio_input->data[curpos] /= nChannels;
+        aubio_input->data[curpos] /= (smpl_t)nChannels;
         // run aubio block when appropriate
-        if (curpos == hop_size - 1)
+        curpos += 1;
+        if (curpos == hop_size)
         {
             blockAudioIn();
-            curpos = -1;
+            curpos = 0;
         }
-        curpos += 1;
     }
 }
 
