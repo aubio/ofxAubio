@@ -37,6 +37,7 @@ void ofxAubioPitch::setup(string method, int buf_s, int hop_s, int samplerate)
     pitch = new_aubio_pitch((char_t*)method.c_str(),
                             buf_size, hop_size, samplerate);
     aubio_pitch_set_unit(pitch, (char_t*)"midi");
+    aubio_pitch_set_tolerance(pitch, 0.7);
     aubio_input = new_fvec(hop_size);
     aubio_output = new_fvec(1);
     curpos = 0;
@@ -83,5 +84,6 @@ void ofxAubioPitch::blockAudioIn()
     if (aubio_output->data[0]) {
         //ofLogNotice() << "found pitch: " << aubio_output->data[0];
         latestPitch = aubio_output->data[0];
+        pitchConfidence = aubio_pitch_get_confidence(pitch);
     }
 }

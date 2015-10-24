@@ -38,6 +38,7 @@ class ofxAubioPitch {
        void audioIn(float *input, int bufferSize, int nChannels);
 
        float latestPitch;
+       float pitchConfidence;
 
     private:
        void blockAudioIn();
