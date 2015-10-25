@@ -36,6 +36,7 @@ void ofxAubioOnset::setup(string method, int buf_s, int hop_s, int samplerate)
     onset = new_aubio_onset((char_t*)method.c_str(),
                             buf_size, hop_size, samplerate);
     if (onset) {
+        threshold = aubio_onset_get_threshold(onset);
         ofLogNotice() << "created ofxAubioOnset(" << method
           << ", " << buf_size
           << ", " << hop_size
@@ -58,5 +59,11 @@ void ofxAubioOnset::blockAudioIn()
         toSend = true;
         //ofLogNotice() << "found onset";
     }
-    latestDescriptor = aubio_onset_get_descriptor(onset);
+    novelty = aubio_onset_get_descriptor(onset);
+    thresholdedNovelty = aubio_onset_get_thresholded_descriptor(onset);
+}
+
+void ofxAubioOnset::setThreshold(float threshold)
+{
+    aubio_onset_set_threshold(onset, threshold);
 }
