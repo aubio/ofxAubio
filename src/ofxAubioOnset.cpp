@@ -63,7 +63,8 @@ void ofxAubioOnset::blockAudioIn()
     thresholdedNovelty = aubio_onset_get_thresholded_descriptor(onset);
 }
 
-void ofxAubioOnset::setThreshold(float threshold)
+void ofxAubioOnset::setThreshold(float newThreshold)
 {
-    aubio_onset_set_threshold(onset, threshold);
+    aubio_onset_set_threshold(onset, newThreshold);
+    threshold = newThreshold;
 }
