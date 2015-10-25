@@ -40,7 +40,6 @@ class ofxAubioBeat : public ofxAubioBlock {
 
     private:
        void blockAudioIn();
-       bool beatFlag = false;
        // aubio stuff
        aubio_tempo_t * tempo;
 };
