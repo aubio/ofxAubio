@@ -19,6 +19,7 @@
 */
 
 #pragma once
+#include <iostream>
 #include <aubio/aubio.h>
 
 class ofxAubioBlock {
@@ -29,6 +30,8 @@ class ofxAubioBlock {
         uint_t curpos;
         fvec_t * aubio_input;
         fvec_t * aubio_output;
+        void setup(std::string method, int buf_s, int hop_s, int samplerate);
+        void cleanup();
         virtual void blockAudioIn() {};
 
     public:

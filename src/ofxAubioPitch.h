@@ -20,11 +20,9 @@
 
 #pragma once
 
-#include "ofxAubioBlock.h"
-#include <aubio/aubio.h>
 #include <iostream>
-
-using namespace std;
+#include <aubio/aubio.h>
+#include "ofxAubioBlock.h"
 
 class ofxAubioPitch : public ofxAubioBlock {
 
@@ -34,7 +32,7 @@ class ofxAubioPitch : public ofxAubioBlock {
        ~ofxAubioPitch();
 
        void setup();
-       void setup(string method, int buf_s, int hop_s, int samplerate);
+       void setup(std::string method, int buf_s, int hop_s, int samplerate);
 
        float latestPitch;
        float pitchConfidence;

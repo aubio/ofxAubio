@@ -20,6 +20,21 @@
 
 #include "ofxAubioBlock.h"
 
+void ofxAubioBlock::setup(std::string method, int buf_s, int hop_s, int samplerate)
+{
+    hop_size = (uint_t)hop_s;
+    buf_size = (uint_t)buf_s;
+    aubio_input = new_fvec(hop_size);
+    aubio_output = new_fvec(1);
+    curpos = 0;
+}
+
+void ofxAubioBlock::cleanup()
+{
+    if (aubio_input) del_fvec(aubio_input);
+    if (aubio_output) del_fvec(aubio_output);
+}
+
 void ofxAubioBlock::audioIn(float * input, int bufferSize, int nChannels)
 {
     uint_t i, j;

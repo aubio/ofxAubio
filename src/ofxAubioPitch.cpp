@@ -32,15 +32,11 @@ void ofxAubioPitch::setup()
 
 void ofxAubioPitch::setup(string method, int buf_s, int hop_s, int samplerate)
 {
-    hop_size = (uint_t)hop_s;
-    buf_size = (uint_t)buf_s;
+    ofxAubioBlock::setup(method, buf_s, hop_s, samplerate);
     pitch = new_aubio_pitch((char_t*)method.c_str(),
                             buf_size, hop_size, samplerate);
     aubio_pitch_set_unit(pitch, (char_t*)"midi");
-    aubio_pitch_set_tolerance(pitch, 0.7);
-    aubio_input = new_fvec(hop_size);
-    aubio_output = new_fvec(1);
-    curpos = 0;
+    //aubio_pitch_set_tolerance(pitch, 0.7);
     if (pitch) {
         ofLogNotice() << "created ofxAubioPitch(" << method
           << ", " << buf_size
@@ -52,18 +48,15 @@ void ofxAubioPitch::setup(string method, int buf_s, int hop_s, int samplerate)
 
 ofxAubioPitch::~ofxAubioPitch()
 {
-    ofLogNotice() << "deleted ofxAubioPitch";
     if (pitch) del_aubio_pitch(pitch);
-    if (aubio_input) del_fvec(aubio_input);
-    if (aubio_output) del_fvec(aubio_output);
+    cleanup();
+    ofLogNotice() << "deleted ofxAubioPitch";
 }
 
 void ofxAubioPitch::blockAudioIn()
 {
     aubio_pitch_do(pitch, aubio_input, aubio_output);
-    if (aubio_output->data[0]) {
-        //ofLogNotice() << "found pitch: " << aubio_output->data[0];
-        latestPitch = aubio_output->data[0];
-        pitchConfidence = aubio_pitch_get_confidence(pitch);
-    }
+    //ofLogNotice() << "found pitch: " << aubio_output->data[0];
+    pitchConfidence = aubio_pitch_get_confidence(pitch);
+    latestPitch = aubio_output->data[0];
 }
