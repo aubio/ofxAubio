@@ -27,19 +27,24 @@ void ofApp::setup(){
     //ofSoundStreamSetup(nOutputs, nInputs, sampleRate, bufferSize, nBuffers);
     //ofSoundStreamListDevices();
 
-    // setup the gui
+    // setup the gui objects
     int start = 0;
-    beatGui.setup("", "settings.xml", start + 10, 10);
+    beatGui.setup("ofxAubioBeat", "settings.xml", start + 10, 10);
     beatGui.add(bpm.setup( "bpm", 0, 0, 250));
 
     start += 250;
-    onsetGui.setup("", "settings.xml", start + 10, 10);
+    onsetGui.setup("ofxAubioOnset", "settings.xml", start + 10, 10);
     onsetGui.add(gotOnset.setup( "onset", 0, 0, 250));
+    onsetGui.add(onsetThreshold.setup( "threshold", 0, 0, 2));
+    onsetGui.add(onsetNovelty.setup( "onset novelty", 0, 0, 10000));
+    onsetGui.add(onsetThresholdedNovelty.setup( "thr. novelty", 0, -1000, 1000));
+    // set default value
+    onsetThreshold = onset.threshold;
 
     start += 250;
-    pitchGui.setup("", "settings.xml", start + 10, 10);
+    pitchGui.setup("ofxAubioPitch", "settings.xml", start + 10, 10);
     pitchGui.add(midiPitch.setup( "midi pitch", 0, 0, 128));
-    pitchGui.add(pitchConfidence.setup( "pitch confidence", 0, 0, 1));
+    pitchGui.add(pitchConfidence.setup( "confidence", 0, 0, 1));
 
 }
 
@@ -57,29 +62,34 @@ void audioOut(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    onset.setThreshold(onsetThreshold);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    // get the latest onset
+    // update beat info
     if (beat.received()) {
       ofSetHexColor(0x00FF00);
-      ofRect(90,100,50,50);
+      ofRect(90,150,50,50);
     }
+
+    // update onset info
     if (onset.received()) {
       ofSetHexColor(0xFF0000);
-      ofRect(250 + 90,100,50,50);
+      ofRect(250 + 90,150,50,50);
       gotOnset = 1;
     } else {
       gotOnset = 0;
     }
+    onsetNovelty = onset.novelty;
+    onsetThresholdedNovelty = onset.thresholdedNovelty;
 
-    ofSetHexColor(0x000000);
+    // update pitch info
     pitchConfidence = pitch.pitchConfidence;
     if (pitchConfidence > 0.7) midiPitch = pitch.latestPitch;
     bpm = beat.bpm;
 
+    // draw
     pitchGui.draw();
     beatGui.draw();
     onsetGui.draw();

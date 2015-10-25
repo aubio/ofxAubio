@@ -38,4 +38,7 @@ class ofApp : public ofBaseApp{
 
     ofxPanel onsetGui;
     ofxFloatSlider gotOnset;
+    ofxFloatSlider onsetThreshold;
+    ofxFloatSlider onsetNovelty;
+    ofxFloatSlider onsetThresholdedNovelty;
 };
