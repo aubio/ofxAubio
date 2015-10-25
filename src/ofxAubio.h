@@ -18,5 +18,7 @@
 
 */
 
+#include "ofxAubioBeat.h"
+#include "ofxAubioOnset.h"
 #include "ofxAubioPitch.h"
 
