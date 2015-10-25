@@ -7,21 +7,20 @@ for [aubio](aubio.org).
 Install
 -------
 
-## MacOSX
+### MacOSX
 
- 1. fetch ofxAubio and aubio.framework from inside your openframeworks root
+Fetch `ofxAubio` and `aubio.framework` from inside your openFrameworks root:
 
     $ cd /path/to/of_root/addons
     $ git clone git://git.aubio.org/git/ofxAubio/
     $ cd ofxAubio
     $ ./scripts/fetch_aubio_framework.sh
 
-  2. open projectGenerator, select 'update project', then select:
+Select projectGenerator, select 'update project', then select the path of
+`example_aubioDemo`, `/path/to/of_root/addons/ofxAubio/example_aubioDemo`.
 
-    /path/to/of_root/addons/ofxAubio/
-
-  3. open `example_aubioDemo.xcodeproject`, drag `aubio.framework` into to it,
-     placing it in 'frameworks / 3rd party frameworks'.
+Open `example_aubioDemo.xcodeproject`, drag `aubio.framework` into to it,
+placing it in `frameworks / 3rd party frameworks`.
 
 Project Homepage
 ----------------
