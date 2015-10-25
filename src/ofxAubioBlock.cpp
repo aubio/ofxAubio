@@ -54,3 +54,12 @@ void ofxAubioBlock::audioIn(float * input, int bufferSize, int nChannels)
         }
     }
 }
+
+bool ofxAubioBlock::received()
+{
+    if (toSend) {
+        toSend = false;
+        return true;
+    }
+    return false;
+}

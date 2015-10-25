@@ -34,6 +34,9 @@ class ofxAubioBlock {
         void cleanup();
         virtual void blockAudioIn() {};
 
+        bool toSend = false;
+
     public:
         void audioIn(float *input, int bufferSize, int nChannels);
+        bool received();
 };
