@@ -8,6 +8,8 @@ class ofApp : public ofBaseApp{
 
 	public:
 		void setup();
+		void exit();
+
 		void update();
 		void draw();
 

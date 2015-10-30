@@ -48,6 +48,11 @@ void ofApp::setup(){
 
 }
 
+void ofApp::exit(){
+    ofSoundStreamStop();
+    ofSoundStreamClose();
+}
+
 void ofApp::audioIn(float * input, int bufferSize, int nChannels){
     // compute onset detection
     onset.audioIn(input, bufferSize, nChannels);
