@@ -74,17 +74,17 @@ void ofApp::update(){
 void ofApp::draw(){
     // update beat info
     if (beat.received()) {
-      ofSetHexColor(0x00FF00);
-      ofRect(90,150,50,50);
+        ofSetHexColor(0x00FF00);
+        ofRect(90,150,50,50);
     }
 
     // update onset info
     if (onset.received()) {
-      ofSetHexColor(0xFF0000);
-      ofRect(250 + 90,150,50,50);
-      gotOnset = 1;
+        ofSetHexColor(0xFF0000);
+        ofRect(250 + 90,150,50,50);
+        gotOnset = 1;
     } else {
-      gotOnset = 0;
+        gotOnset = 0;
     }
     onsetNovelty = onset.novelty;
     onsetThresholdedNovelty = onset.thresholdedNovelty;
