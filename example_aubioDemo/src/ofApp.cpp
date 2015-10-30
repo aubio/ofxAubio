@@ -100,7 +100,7 @@ void ofApp::draw(){
 
     // update pitch info
     pitchConfidence = pitch.pitchConfidence;
-    if (pitchConfidence > 0.7) midiPitch = pitch.latestPitch;
+    if (pitch.latestPitch) midiPitch = pitch.latestPitch;
     bpm = beat.bpm;
 
     // draw
