@@ -18,8 +18,31 @@
 
 */
 
-#include "ofxAubioBeat.h"
-#include "ofxAubioOnset.h"
-#include "ofxAubioPitch.h"
-#include "ofxAubioMelBands.h"
+#pragma once
 
+#include <iostream>
+#include <aubio/aubio.h>
+#include "ofxAubioBlock.h"
+
+using namespace std;
+
+class ofxAubioMelBands : public ofxAubioBlock {
+
+    public:
+
+       ofxAubioMelBands();
+       ~ofxAubioMelBands();
+
+       void setup();
+       void setup(string method, int buf_s, int hop_s, int samplerate);
+
+       float *energies;
+
+    private:
+       void blockAudioIn();
+       // aubio stuff
+       aubio_pvoc_t *pv;
+       cvec_t *spectrum;
+       aubio_filterbank_t *fb;
+       fvec_t *bands;
+};
