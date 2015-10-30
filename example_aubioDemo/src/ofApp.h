@@ -30,6 +30,7 @@ class ofApp : public ofBaseApp{
         ofxAubioOnset onset;
         ofxAubioPitch pitch;
         ofxAubioBeat beat;
+        ofxAubioMelBands bands;
 
         ofxPanel pitchGui;
         ofxFloatSlider midiPitch;
@@ -43,4 +44,7 @@ class ofApp : public ofBaseApp{
         ofxFloatSlider onsetThreshold;
         ofxFloatSlider onsetNovelty;
         ofxFloatSlider onsetThresholdedNovelty;
+
+        ofxPanel bandsGui;
+        ofPolyline bandPlot;
 };

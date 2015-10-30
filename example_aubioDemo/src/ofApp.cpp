@@ -23,6 +23,9 @@ void ofApp::setup(){
     beat.setup();
     //beat.setup("default", 2 * bufferSize, bufferSize, samplerate);
 
+    // setup mel bands object
+    bands.setup();
+
     ofSoundStreamSetup(nOutputs, nInputs, this);
     //ofSoundStreamSetup(nOutputs, nInputs, sampleRate, bufferSize, nBuffers);
     //ofSoundStreamListDevices();
@@ -46,6 +49,10 @@ void ofApp::setup(){
     pitchGui.add(midiPitch.setup( "midi pitch", 0, 0, 128));
     pitchGui.add(pitchConfidence.setup( "confidence", 0, 0, 1));
 
+    bandsGui.setup("ofxAubioMelBands", "settings.xml", start + 10, 115);
+    for (int i = 0; i < 40; i++) {
+        bandPlot.addVertex( 50 + i * 650 / 40., 240 - 100 * bands.energies[i]);
+    }
 }
 
 void ofApp::exit(){
@@ -60,6 +67,8 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
     pitch.audioIn(input, bufferSize, nChannels);
     // compute beat location
     beat.audioIn(input, bufferSize, nChannels);
+    // compute bands
+    bands.audioIn(input, bufferSize, nChannels);
 }
 
 void audioOut(){
@@ -98,6 +107,15 @@ void ofApp::draw(){
     pitchGui.draw();
     beatGui.draw();
     onsetGui.draw();
+
+    ofSetColor(ofColor::orange);
+    ofSetLineWidth(3.);
+    bandsGui.draw();
+    //bandPlot.clear();
+    for (int i = 0; i < bandPlot.size(); i++) {
+        bandPlot[i].y = 240 - 100 * bands.energies[i];
+    }
+    bandPlot.draw();
 }
 
 //--------------------------------------------------------------
