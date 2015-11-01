@@ -1,8 +1,9 @@
 ofxAubio
 ========
 
-[ofxAubio](aubio.org/ofxAubio) is an [openFrameworks](openframeworks.cc)
-[addon](www.ofxaddons.com) for [aubio](aubio.org).
+[ofxAubio](https://aubio.org/ofxAubio) is an
+[openFrameworks](http://openframeworks.cc) [addon](http://www.ofxaddons.com)
+for [aubio](https://aubio.org).
 
 Install
 -------
@@ -25,7 +26,7 @@ placing it in `frameworks / 3rd party frameworks`.
 Project Homepage
 ----------------
 
-The home page of ofxAubio can be found at: http://aubio.org/ofxAubio/
+The home page of ofxAubio can be found at: https://aubio.org/ofxAubio/
 
 Copyright and License Information
 ---------------------------------
