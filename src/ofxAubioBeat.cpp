@@ -59,4 +59,14 @@ void ofxAubioBeat::blockAudioIn()
         toSend = true;
         bpm = aubio_tempo_get_bpm(tempo);
     }
+    if (aubio_tempo_was_tatum(tempo) == 1) {
+        toSendTatum = true;
+    }
+}
+
+void ofxAubioBeat::setTatumSignature(unsigned tatumSignature)
+{
+    if (aubio_tempo_set_tatum_signature(tempo, tatumSignature)) {
+        tatum_signature = tatumSignature;
+    }
 }

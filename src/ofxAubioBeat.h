@@ -36,7 +36,11 @@ class ofxAubioBeat : public ofxAubioBlock {
        void setup();
        void setup(string method, int buf_s, int hop_s, int samplerate);
 
+       void setTatumSignature(unsigned tatumSignature);
+
        float bpm;
+       unsigned tatum_signature;
+       bool toSendTatum;
 
     private:
        void blockAudioIn();
