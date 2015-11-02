@@ -37,6 +37,7 @@ class ofApp : public ofBaseApp{
         ofxFloatSlider pitchConfidence;
 
         ofxPanel beatGui;
+        ofxIntSlider bpm_tatumSignature;
         ofxFloatSlider bpm;
 
         ofxPanel onsetGui;

@@ -33,6 +33,7 @@ void ofApp::setup(){
     // setup the gui objects
     int start = 0;
     beatGui.setup("ofxAubioBeat", "settings.xml", start + 10, 10);
+    beatGui.add(bpm_tatumSignature.setup( "tatum signature", 1, 1, 64));
     beatGui.add(bpm.setup( "bpm", 0, 0, 250));
 
     start += 250;
@@ -77,6 +78,7 @@ void audioOut(){
 //--------------------------------------------------------------
 void ofApp::update(){
     onset.setThreshold(onsetThreshold);
+    beat.setTatumSignature((unsigned)bpm_tatumSignature);
 }
 
 //--------------------------------------------------------------
@@ -85,6 +87,11 @@ void ofApp::draw(){
     if (beat.received()) {
         ofSetColor(ofColor::green);
         ofRect(90,150,50,50);
+    }
+    if (beat.toSendTatum) {
+        ofSetColor(ofColor::limeGreen);
+        ofRect(140,150,25,25);
+        beat.toSendTatum = false;
     }
 
     // update onset info
