@@ -58,7 +58,6 @@ void ofxAubioOnset::blockAudioIn()
 {
     aubio_onset_do(onset, aubio_input, aubio_output);
     if (aubio_output->data[0]) {
-        toSend = true;
         //ofLogNotice() << "found onset";
         float last_onset = aubio_onset_get_last_s(onset);
         ofNotifyEvent(gotOnset, last_onset, this);
