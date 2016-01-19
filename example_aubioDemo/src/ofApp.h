@@ -26,6 +26,8 @@ class ofApp : public ofBaseApp{
         void audioIn(float * input, int bufferSize, int nChannels);
         void audioOut();
 
+        void onsetEvent(float & time);
+
     private:
         ofxAubioOnset onset;
         ofxAubioPitch pitch;

@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "ofEventUtils.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -14,6 +15,8 @@ void ofApp::setup(){
     // setup onset object
     onset.setup();
     //onset.setup("mkl", 2 * bufferSize, bufferSize, sampleRate);
+    // listen to onset event
+    ofAddListener(onset.gotOnset, this, &ofApp::onsetEvent);
 
     // setup pitch object
     pitch.setup();
@@ -88,11 +91,9 @@ void ofApp::draw(){
     }
 
     // update onset info
-    if (onset.received()) {
+    if (gotOnset) {
         ofSetColor(ofColor::red);
         ofRect(250 + 90,150,50,50);
-        gotOnset = 1;
-    } else {
         gotOnset = 0;
     }
     onsetNovelty = onset.novelty;
@@ -161,4 +162,10 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
 
+}
+
+//----
+void ofApp::onsetEvent(float & time) {
+    ofLog() << "got onset at " << time << " s";
+    gotOnset = 1;
 }
