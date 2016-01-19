@@ -21,6 +21,8 @@
 #include "ofxAubioBeat.h"
 #include "ofLog.h"
 
+ofEvent<float> ofxAubioBeat::gotGlobalBeat = ofEvent<float>();
+
 ofxAubioBeat::ofxAubioBeat()
 {
 }
@@ -57,7 +59,9 @@ void ofxAubioBeat::blockAudioIn()
     aubio_tempo_do(tempo, aubio_input, aubio_output);
     if (aubio_output->data[0]) {
         //ofLogNotice() << "found beat: " << aubio_output->data[0];
-        toSend = true;
         bpm = aubio_tempo_get_bpm(tempo);
+        float last_beat = aubio_tempo_get_last_s(tempo);
+        ofNotifyEvent(gotBeat, last_beat, this);
+        ofNotifyEvent(gotGlobalBeat, last_beat);
     }
 }

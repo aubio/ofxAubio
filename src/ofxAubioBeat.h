@@ -22,6 +22,7 @@
 
 #include <iostream>
 #include <aubio/aubio.h>
+#include "ofEvents.h"
 #include "ofxAubioBlock.h"
 
 using namespace std;
@@ -32,6 +33,9 @@ class ofxAubioBeat : public ofxAubioBlock {
 
        ofxAubioBeat();
        ~ofxAubioBeat();
+
+       ofEvent<float> gotBeat;
+       static ofEvent<float> gotGlobalBeat;
 
        void setup();
        void setup(string method, int buf_s, int hop_s, int samplerate);
