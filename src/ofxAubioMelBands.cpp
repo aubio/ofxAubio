@@ -33,11 +33,12 @@ void ofxAubioMelBands::setup()
 void ofxAubioMelBands::setup(string method, int buf_s, int hop_s, int samplerate)
 {
     ofxAubioBlock::setup(method, buf_s, hop_s, samplerate);
+    nBands = 40;
     pv = new_aubio_pvoc(buf_s, hop_s);
     spectrum = new_cvec(buf_s);
-    fb = new_aubio_filterbank(40, buf_s);
+    fb = new_aubio_filterbank(nBands, buf_s);
     aubio_filterbank_set_mel_coeffs_slaney(fb, samplerate);
-    bands = new_fvec(40);
+    bands = new_fvec(nBands);
     energies = bands->data;
 
     if (pv && fb) {
