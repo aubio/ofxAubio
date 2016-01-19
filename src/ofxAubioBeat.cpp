@@ -38,7 +38,7 @@ void ofxAubioBeat::setup(string method, int buf_s, int hop_s, int samplerate)
     ofxAubioBlock::setup(method, buf_s, hop_s, samplerate);
     tempo = new_aubio_tempo((char_t*)method.c_str(),
                             buf_size, hop_size, samplerate);
-    aubio_tempo_set_silence(tempo, -40);
+    aubio_tempo_set_silence(tempo, -60);
     if (tempo) {
         ofLogNotice() << "created ofxAubioBeat(" << method
           << ", " << buf_size
