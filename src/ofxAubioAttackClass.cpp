@@ -29,6 +29,8 @@ ofxAubioAttackClass::ofxAubioAttackClass()
 {
     lag_onset = 3;
     lag_beat = 3;
+    min_band_onset = 3;
+    min_band_beat = 3;
 }
 
 ofxAubioAttackClass::~ofxAubioAttackClass()
@@ -61,7 +63,7 @@ void ofxAubioAttackClass::setBeat(ofxAubioBeat & _beat) {
 void ofxAubioAttackClass::audioIn()
 {
     energies.push_back(bands->energies);
-    if (energies.size() > max(lag_onset, lag_beat) - 1) {
+    if (energies.size() > max(lag_onset, lag_beat)) {
         energies.erase (energies.begin());
     }
     // hack to add a counter to delay lag * blockSize frames
@@ -88,13 +90,13 @@ void ofxAubioAttackClass::onsetEvent(float & time)
 }
 
 void ofxAubioAttackClass::onsetClassify() {
-    if (energies.size() == lag_onset - 1) {
+    if (energies.size() >= lag_onset) {
         int max_band = 0;
         float max_energy = 0;
-        for (int i = 0; i < bands->nBands; i ++) {
+        for (int i = min_band_onset; i < bands->nBands; i ++) {
             float band_sum = 0;
-            for (int j = 0; j < energies.size(); j ++) {
-                band_sum += energies[j][i];
+            for (int j = 0; j < lag_onset; j ++) {
+                band_sum += energies[energies.size() - j - 1][i];
             }
             if (max_energy < band_sum) {
                 max_energy = band_sum;
@@ -116,13 +118,13 @@ void ofxAubioAttackClass::beatEvent(float & time)
 }
 
 void ofxAubioAttackClass::beatClassify() {
-    if (energies.size() == lag_beat - 1) {
+    if (energies.size() >= lag_beat) {
         int max_band = 0;
         float max_energy = 0;
-        for (int i = 0; i < bands->nBands; i ++) {
+        for (int i = min_band_beat; i < bands->nBands; i ++) {
             float band_sum = 0;
-            for (int j = 0; j < energies.size(); j ++) {
-                band_sum += energies[j][i];
+            for (int j = 0; j < lag_beat; j ++) {
+                band_sum += energies[energies.size() - j - 1][i];
             }
             if (max_energy < band_sum) {
                 max_energy = band_sum;

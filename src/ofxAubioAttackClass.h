@@ -61,9 +61,11 @@ class ofxAubioAttackClass : public ofxAubioBlock {
        void onsetClassify();
        void beatClassify();
 
-    private:
        int lag_onset;
        int lag_beat;
+       int min_band_onset;
+       int min_band_beat;
+    private:
        int startOnsetSelection;
        int startBeatSelection;
 };
