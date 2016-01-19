@@ -32,20 +32,15 @@ void ofApp::setup(){
     // setup mel bands object
     bands.setup();
 
-    // setup onsetClass object
-    onsetClass.setup();
-    onsetClass.setBands(bands);
+    // setup attackClass object
+    attackClass.setup();
+    attackClass.setBands(bands);
 
-    onsetClass.setOnset(onset);
-    ofAddListener(onsetClass.gotOnsetClass, this, &ofApp::onsetClassEvent);
+    attackClass.setOnset(onset);
+    ofAddListener(attackClass.gotOnsetClass, this, &ofApp::onsetClassEvent);
 
-    onsetClass.setBeat(beat);
-    ofAddListener(onsetClass.gotBeatClass, this, &ofApp::beatClassEvent);
-
-    beatClass.setup();
-    beatClass.setBeat(beat);
-    beatClass.setBands(bands);
-    ofAddListener(beatClass.gotBeatClass, this, &ofApp::beatClassEvent);
+    attackClass.setBeat(beat);
+    ofAddListener(attackClass.gotBeatClass, this, &ofApp::beatClassEvent);
 
     ofSoundStreamSetup(nOutputs, nInputs, this);
     //ofSoundStreamSetup(nOutputs, nInputs, sampleRate, bufferSize, nBuffers);
@@ -92,7 +87,7 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
     bands.audioIn(input, bufferSize, nChannels);
 
     // compute onset class
-    onsetClass.audioIn(); //, onset, bands);
+    attackClass.audioIn(); //, onset, bands);
 }
 
 void audioOut(){
@@ -147,10 +142,11 @@ void ofApp::draw(){
     bandPlot.draw();
 
     // onset class
-    ofRect(250 + 190 + onsetClass.currentClass * 7, 150, 50, 50);
+    ofRect(250 + 190 + currentOnsetClass * 7, 150, 20, 20);
 
     // beat class
-    ofRect(190 + beatClass.currentClass * 7, 150, 50, 50);
+    ofRect(190 + currentBeatClass * 7, 150, 20, 20);
+
 }
 
 //--------------------------------------------------------------
@@ -219,9 +215,11 @@ void ofApp::tatumEvent(int & t) {
 //---
 void ofApp::onsetClassEvent(int & t) {
     //ofLog() << "got onset class event at " << t << " ";
+    currentOnsetClass = t;
 }
 
 //---
 void ofApp::beatClassEvent(int & t) {
-    ofLog() << "got beat class event of class " << t << " ";
+    ofLog() << "got beat class event of class " << t;
+    currentBeatClass = t;
 }

@@ -37,8 +37,9 @@ class ofApp : public ofBaseApp{
         ofxAubioPitch pitch;
         ofxAubioBeat beat;
         ofxAubioMelBands bands;
-        ofxAubioAttackClass onsetClass;
-        ofxAubioAttackClass beatClass;
+        ofxAubioAttackClass attackClass;
+        int currentOnsetClass;
+        int currentBeatClass;
 
         ofxPanel pitchGui;
         ofxFloatSlider midiPitch;
