@@ -168,12 +168,12 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //----
 void ofApp::onsetEvent(float & time) {
-    ofLog() << "got onset at " << time << " s";
+    //ofLog() << "got onset at " << time << " s";
     gotOnset = true;
 }
 
 //----
 void ofApp::beatEvent(float & time) {
-    ofLog() << "got beat at " << time << " s";
+    //ofLog() << "got beat at " << time << " s";
     gotBeat = true;
 }
