@@ -182,7 +182,7 @@ void ofApp::onsetEvent(float & time) {
 
 //----
 void ofApp::beatEvent(float & time) {
-    ofLog() << "got beat at " << time << " s";
+    //ofLog() << "got beat at " << time << " s";
     gotBeat = true;
 }
 
