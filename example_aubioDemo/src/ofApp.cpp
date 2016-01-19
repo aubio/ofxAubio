@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "ofEventUtils.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -14,6 +15,8 @@ void ofApp::setup(){
     // setup onset object
     onset.setup();
     //onset.setup("mkl", 2 * bufferSize, bufferSize, sampleRate);
+    // listen to onset event
+    ofAddListener(onset.gotOnset, this, &ofApp::onsetEvent);
 
     // setup pitch object
     pitch.setup();
@@ -22,6 +25,8 @@ void ofApp::setup(){
     // setup beat object
     beat.setup();
     //beat.setup("default", 2 * bufferSize, bufferSize, samplerate);
+    // listen to beat event
+    ofAddListener(beat.gotBeat, this, &ofApp::beatEvent);
 
     // setup mel bands object
     bands.setup();
@@ -38,7 +43,6 @@ void ofApp::setup(){
 
     start += 250;
     onsetGui.setup("ofxAubioOnset", "settings.xml", start + 10, 10);
-    onsetGui.add(gotOnset.setup( "onset", 0, 0, 250));
     onsetGui.add(onsetThreshold.setup( "threshold", 0, 0, 2));
     onsetGui.add(onsetNovelty.setup( "onset novelty", 0, 0, 10000));
     onsetGui.add(onsetThresholdedNovelty.setup( "thr. novelty", 0, -1000, 1000));
@@ -84,9 +88,10 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     // update beat info
-    if (beat.received()) {
+    if (gotBeat) {
         ofSetColor(ofColor::green);
         ofRect(90,150,50,50);
+        gotBeat = false;
     }
     if (beat.toSendTatum) {
         ofSetColor(ofColor::limeGreen);
@@ -95,12 +100,10 @@ void ofApp::draw(){
     }
 
     // update onset info
-    if (onset.received()) {
+    if (gotOnset) {
         ofSetColor(ofColor::red);
         ofRect(250 + 90,150,50,50);
-        gotOnset = 1;
-    } else {
-        gotOnset = 0;
+        gotOnset = false;
     }
     onsetNovelty = onset.novelty;
     onsetThresholdedNovelty = onset.thresholdedNovelty;
@@ -168,4 +171,16 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
 
+}
+
+//----
+void ofApp::onsetEvent(float & time) {
+    ofLog() << "got onset at " << time << " s";
+    gotOnset = true;
+}
+
+//----
+void ofApp::beatEvent(float & time) {
+    ofLog() << "got beat at " << time << " s";
+    gotBeat = true;
 }

@@ -21,6 +21,8 @@
 #include "ofxAubioOnset.h"
 #include "ofLog.h"
 
+ofEvent<float> ofxAubioOnset::gotGlobalOnset = ofEvent<float>();
+
 ofxAubioOnset::ofxAubioOnset()
 {
 }
@@ -56,8 +58,10 @@ void ofxAubioOnset::blockAudioIn()
 {
     aubio_onset_do(onset, aubio_input, aubio_output);
     if (aubio_output->data[0]) {
-        toSend = true;
         //ofLogNotice() << "found onset";
+        float last_onset = aubio_onset_get_last_s(onset);
+        ofNotifyEvent(gotOnset, last_onset, this);
+        ofNotifyEvent(gotGlobalOnset, last_onset);
     }
     novelty = aubio_onset_get_descriptor(onset);
     thresholdedNovelty = aubio_onset_get_thresholded_descriptor(onset);

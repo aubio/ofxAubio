@@ -21,6 +21,8 @@
 #include "ofxAubioBeat.h"
 #include "ofLog.h"
 
+ofEvent<float> ofxAubioBeat::gotGlobalBeat = ofEvent<float>();
+
 ofxAubioBeat::ofxAubioBeat()
 {
 }
@@ -35,6 +37,7 @@ void ofxAubioBeat::setup(string method, int buf_s, int hop_s, int samplerate)
     ofxAubioBlock::setup(method, buf_s, hop_s, samplerate);
     tempo = new_aubio_tempo((char_t*)method.c_str(),
                             buf_size, hop_size, samplerate);
+    aubio_tempo_set_silence(tempo, -40);
     if (tempo) {
         ofLogNotice() << "created ofxAubioBeat(" << method
           << ", " << buf_size
@@ -56,8 +59,10 @@ void ofxAubioBeat::blockAudioIn()
     aubio_tempo_do(tempo, aubio_input, aubio_output);
     if (aubio_output->data[0]) {
         //ofLogNotice() << "found beat: " << aubio_output->data[0];
-        toSend = true;
         bpm = aubio_tempo_get_bpm(tempo);
+        float last_beat = aubio_tempo_get_last_s(tempo);
+        ofNotifyEvent(gotBeat, last_beat, this);
+        ofNotifyEvent(gotGlobalBeat, last_beat);
     }
     if (aubio_tempo_was_tatum(tempo) == 1) {
         toSendTatum = true;

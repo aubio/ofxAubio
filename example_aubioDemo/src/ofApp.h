@@ -26,6 +26,9 @@ class ofApp : public ofBaseApp{
         void audioIn(float * input, int bufferSize, int nChannels);
         void audioOut();
 
+        void onsetEvent(float & time);
+        void beatEvent(float & time);
+
     private:
         ofxAubioOnset onset;
         ofxAubioPitch pitch;
@@ -37,11 +40,12 @@ class ofApp : public ofBaseApp{
         ofxFloatSlider pitchConfidence;
 
         ofxPanel beatGui;
+        bool gotBeat;
         ofxIntSlider bpm_tatumSignature;
         ofxFloatSlider bpm;
 
         ofxPanel onsetGui;
-        ofxFloatSlider gotOnset;
+        bool gotOnset;
         ofxFloatSlider onsetThreshold;
         ofxFloatSlider onsetNovelty;
         ofxFloatSlider onsetThresholdedNovelty;
