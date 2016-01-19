@@ -27,6 +27,7 @@ class ofApp : public ofBaseApp{
         void audioOut();
 
         void onsetEvent(float & time);
+        void beatEvent(float & time);
 
     private:
         ofxAubioOnset onset;
@@ -39,10 +40,11 @@ class ofApp : public ofBaseApp{
         ofxFloatSlider pitchConfidence;
 
         ofxPanel beatGui;
+        bool gotBeat;
         ofxFloatSlider bpm;
 
         ofxPanel onsetGui;
-        ofxFloatSlider gotOnset;
+        bool gotOnset;
         ofxFloatSlider onsetThreshold;
         ofxFloatSlider onsetNovelty;
         ofxFloatSlider onsetThresholdedNovelty;
