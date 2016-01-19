@@ -22,6 +22,7 @@
 #include "ofLog.h"
 
 ofEvent<float> ofxAubioBeat::gotGlobalBeat = ofEvent<float>();
+ofEvent<int> ofxAubioBeat::gotGlobalTatum = ofEvent<int>();
 
 ofxAubioBeat::ofxAubioBeat()
 {
@@ -65,7 +66,9 @@ void ofxAubioBeat::blockAudioIn()
         ofNotifyEvent(gotGlobalBeat, last_beat);
     }
     if (aubio_tempo_was_tatum(tempo) == 1) {
-        toSendTatum = true;
+        int last_tatum = aubio_tempo_get_last_tatum(tempo);
+        ofNotifyEvent(gotTatum, last_tatum, this);
+        ofNotifyEvent(gotGlobalTatum, last_tatum);
     }
 }
 

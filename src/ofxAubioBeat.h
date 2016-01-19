@@ -36,6 +36,8 @@ class ofxAubioBeat : public ofxAubioBlock {
 
        ofEvent<float> gotBeat;
        static ofEvent<float> gotGlobalBeat;
+       ofEvent<int> gotTatum;
+       static ofEvent<int> gotGlobalTatum;
 
        void setup();
        void setup(string method, int buf_s, int hop_s, int samplerate);
@@ -44,7 +46,6 @@ class ofxAubioBeat : public ofxAubioBlock {
 
        float bpm;
        unsigned tatum_signature;
-       bool toSendTatum;
 
     private:
        void blockAudioIn();
