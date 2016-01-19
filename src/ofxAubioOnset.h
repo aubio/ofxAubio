@@ -22,6 +22,7 @@
 
 #include <iostream>
 #include <aubio/aubio.h>
+#include "ofEvents.h"
 #include "ofxAubioBlock.h"
 
 class ofxAubioOnset : public ofxAubioBlock {
@@ -30,6 +31,9 @@ class ofxAubioOnset : public ofxAubioBlock {
 
        ofxAubioOnset();
        ~ofxAubioOnset();
+
+       ofEvent<float> gotOnset;
+       static ofEvent<float> gotGlobalOnset;
 
        void setup();
        void setup(std::string method, int buf_s, int hop_s, int samplerate);
