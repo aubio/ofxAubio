@@ -87,7 +87,7 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
     bands.audioIn(input, bufferSize, nChannels);
 
     // compute onset class
-    attackClass.audioIn(); //, onset, bands);
+    attackClass.audioIn(input, bufferSize, nChannels);
 }
 
 void audioOut(){
@@ -142,10 +142,12 @@ void ofApp::draw(){
     bandPlot.draw();
 
     // onset class
-    ofRect(250 + 190 + currentOnsetClass * 7, 150, 20, 20);
+    ofSetColor(200, 100, 100);
+    ofRect(250 + 190 + currentOnsetClass * 7, 180, 10, 30);
 
     // beat class
-    ofRect(190 + currentBeatClass * 7, 150, 20, 20);
+    ofSetColor(100, 200, 100);
+    ofRect(190 + currentBeatClass * 7, 170, 10, 30);
 
 }
 

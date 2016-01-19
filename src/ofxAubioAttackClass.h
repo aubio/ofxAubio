@@ -56,7 +56,7 @@ class ofxAubioAttackClass : public ofxAubioBlock {
        void setup();
        void setup(std::string method, int buf_s, int hop_s, int samplerate);
 
-       void audioIn();
+       void audioIn(float *input, int bufferSize, int nChannels);
 
        void onsetClassify();
        void beatClassify();
@@ -68,4 +68,5 @@ class ofxAubioAttackClass : public ofxAubioBlock {
     private:
        int startOnsetSelection;
        int startBeatSelection;
+       void blockAudioIn();
 };
