@@ -31,6 +31,12 @@ void ofApp::setup(){
     // setup mel bands object
     bands.setup();
 
+    // setup onsetClass object
+    onsetClass.setup();
+    onsetClass.setOnset(onset);
+    onsetClass.setBands(bands);
+    ofAddListener(onsetClass.gotOnsetClass, this, &ofApp::onsetClassEvent);
+
     ofSoundStreamSetup(nOutputs, nInputs, this);
     //ofSoundStreamSetup(nOutputs, nInputs, sampleRate, bufferSize, nBuffers);
     //ofSoundStreamListDevices();
@@ -73,6 +79,9 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
     beat.audioIn(input, bufferSize, nChannels);
     // compute bands
     bands.audioIn(input, bufferSize, nChannels);
+
+    // compute onset class
+    onsetClass.audioIn(); //, onset, bands);
 }
 
 void audioOut(){
@@ -119,6 +128,8 @@ void ofApp::draw(){
         bandPlot[i].y = 240 - 100 * bands.energies[i];
     }
     bandPlot.draw();
+
+    ofRect(250 + 190 + onsetClass.currentClass * 7, 150, 50, 50);
 }
 
 //--------------------------------------------------------------
@@ -176,4 +187,9 @@ void ofApp::onsetEvent(float & time) {
 void ofApp::beatEvent(float & time) {
     //ofLog() << "got beat at " << time << " s";
     gotBeat = true;
+}
+
+//---
+void ofApp::onsetClassEvent(int & t) {
+    //ofLog() << "got onset class event at " << t << " ";
 }

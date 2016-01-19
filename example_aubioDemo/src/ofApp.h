@@ -28,12 +28,14 @@ class ofApp : public ofBaseApp{
 
         void onsetEvent(float & time);
         void beatEvent(float & time);
+        void onsetClassEvent(int & t);
 
     private:
         ofxAubioOnset onset;
         ofxAubioPitch pitch;
         ofxAubioBeat beat;
         ofxAubioMelBands bands;
+        ofxAubioOnsetClass onsetClass;
 
         ofxPanel pitchGui;
         ofxFloatSlider midiPitch;
