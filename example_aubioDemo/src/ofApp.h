@@ -28,6 +28,7 @@ class ofApp : public ofBaseApp{
 
         void onsetEvent(float & time);
         void beatEvent(float & time);
+        void tatumEvent(int & t);
 
     private:
         ofxAubioOnset onset;
@@ -41,6 +42,7 @@ class ofApp : public ofBaseApp{
 
         ofxPanel beatGui;
         bool gotBeat;
+        bool gotTatum;
         ofxIntSlider bpm_tatumSignature;
         ofxFloatSlider bpm;
 

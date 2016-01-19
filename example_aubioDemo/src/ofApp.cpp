@@ -27,6 +27,7 @@ void ofApp::setup(){
     //beat.setup("default", 2 * bufferSize, bufferSize, samplerate);
     // listen to beat event
     ofAddListener(beat.gotBeat, this, &ofApp::beatEvent);
+    ofAddListener(beat.gotTatum, this, &ofApp::tatumEvent);
 
     // setup mel bands object
     bands.setup();
@@ -38,7 +39,7 @@ void ofApp::setup(){
     // setup the gui objects
     int start = 0;
     beatGui.setup("ofxAubioBeat", "settings.xml", start + 10, 10);
-    beatGui.add(bpm_tatumSignature.setup( "tatum signature", 1, 1, 64));
+    beatGui.add(bpm_tatumSignature.setup( "tatum signature", 4, 1, 64));
     beatGui.add(bpm.setup( "bpm", 0, 0, 250));
 
     start += 250;
@@ -93,10 +94,10 @@ void ofApp::draw(){
         ofRect(90,150,50,50);
         gotBeat = false;
     }
-    if (beat.toSendTatum) {
+    if (gotTatum) {
         ofSetColor(ofColor::limeGreen);
         ofRect(140,150,25,25);
-        beat.toSendTatum = false;
+        gotTatum = false;
     }
 
     // update onset info
@@ -175,7 +176,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //----
 void ofApp::onsetEvent(float & time) {
-    ofLog() << "got onset at " << time << " s";
+    //ofLog() << "got onset at " << time << " s";
     gotOnset = true;
 }
 
@@ -183,4 +184,10 @@ void ofApp::onsetEvent(float & time) {
 void ofApp::beatEvent(float & time) {
     ofLog() << "got beat at " << time << " s";
     gotBeat = true;
+}
+
+//----
+void ofApp::tatumEvent(int & t) {
+    //ofLog() << "got tatum at " << time << " samples";
+    gotTatum = true;
 }
