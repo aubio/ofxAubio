@@ -22,4 +22,4 @@
 #include "ofxAubioOnset.h"
 #include "ofxAubioPitch.h"
 #include "ofxAubioMelBands.h"
-
+#include "ofxAubioAttackClass.h"
