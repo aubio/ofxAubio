@@ -34,9 +34,18 @@ void ofApp::setup(){
 
     // setup onsetClass object
     onsetClass.setup();
-    onsetClass.setOnset(onset);
     onsetClass.setBands(bands);
+
+    onsetClass.setOnset(onset);
     ofAddListener(onsetClass.gotOnsetClass, this, &ofApp::onsetClassEvent);
+
+    onsetClass.setBeat(beat);
+    ofAddListener(onsetClass.gotBeatClass, this, &ofApp::beatClassEvent);
+
+    beatClass.setup();
+    beatClass.setBeat(beat);
+    beatClass.setBands(bands);
+    ofAddListener(beatClass.gotBeatClass, this, &ofApp::beatClassEvent);
 
     ofSoundStreamSetup(nOutputs, nInputs, this);
     //ofSoundStreamSetup(nOutputs, nInputs, sampleRate, bufferSize, nBuffers);
@@ -137,7 +146,11 @@ void ofApp::draw(){
     }
     bandPlot.draw();
 
+    // onset class
     ofRect(250 + 190 + onsetClass.currentClass * 7, 150, 50, 50);
+
+    // beat class
+    ofRect(190 + beatClass.currentClass * 7, 150, 50, 50);
 }
 
 //--------------------------------------------------------------
@@ -206,4 +219,9 @@ void ofApp::tatumEvent(int & t) {
 //---
 void ofApp::onsetClassEvent(int & t) {
     //ofLog() << "got onset class event at " << t << " ";
+}
+
+//---
+void ofApp::beatClassEvent(int & t) {
+    ofLog() << "got beat class event of class " << t << " ";
 }

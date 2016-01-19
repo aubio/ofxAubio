@@ -30,13 +30,15 @@ class ofApp : public ofBaseApp{
         void beatEvent(float & time);
         void tatumEvent(int & t);
         void onsetClassEvent(int & t);
+        void beatClassEvent(int & t);
 
     private:
         ofxAubioOnset onset;
         ofxAubioPitch pitch;
         ofxAubioBeat beat;
         ofxAubioMelBands bands;
-        ofxAubioOnsetClass onsetClass;
+        ofxAubioAttackClass onsetClass;
+        ofxAubioAttackClass beatClass;
 
         ofxPanel pitchGui;
         ofxFloatSlider midiPitch;
