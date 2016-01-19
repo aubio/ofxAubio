@@ -22,6 +22,7 @@
 #include "ofLog.h"
 
 ofEvent<float> ofxAubioBeat::gotGlobalBeat = ofEvent<float>();
+ofEvent<int> ofxAubioBeat::gotGlobalTatum = ofEvent<int>();
 
 ofxAubioBeat::ofxAubioBeat()
 {
@@ -63,5 +64,17 @@ void ofxAubioBeat::blockAudioIn()
         float last_beat = aubio_tempo_get_last_s(tempo);
         ofNotifyEvent(gotBeat, last_beat, this);
         ofNotifyEvent(gotGlobalBeat, last_beat);
+    }
+    if (aubio_tempo_was_tatum(tempo) == 1) {
+        int last_tatum = aubio_tempo_get_last_tatum(tempo);
+        ofNotifyEvent(gotTatum, last_tatum, this);
+        ofNotifyEvent(gotGlobalTatum, last_tatum);
+    }
+}
+
+void ofxAubioBeat::setTatumSignature(unsigned tatumSignature)
+{
+    if (aubio_tempo_set_tatum_signature(tempo, tatumSignature)) {
+        tatum_signature = tatumSignature;
     }
 }
