@@ -36,10 +36,13 @@ void ofxAubioMelBands::setup(string method, int buf_s, int hop_s, int samplerate
     nBands = 40;
     pv = new_aubio_pvoc(buf_s, hop_s);
     spectrum = new_cvec(buf_s);
+    awhitening = new_aubio_spectral_whitening(buf_s, hop_s, samplerate);
     fb = new_aubio_filterbank(nBands, buf_s);
     aubio_filterbank_set_mel_coeffs_slaney(fb, samplerate);
     bands = new_fvec(nBands);
     energies = bands->data;
+
+    bDoWhitening = true;
 
     if (pv && fb) {
         ofLogNotice() << "created ofxAubioMelBands(" << method
@@ -54,6 +57,7 @@ ofxAubioMelBands::~ofxAubioMelBands()
 {
     if (spectrum) del_cvec(spectrum);
     if (pv) del_aubio_pvoc(pv);
+    if (awhitening) del_aubio_spectral_whitening(awhitening);
     if (bands) del_fvec(bands);
     if (fb) del_aubio_filterbank(fb);
     cleanup();
@@ -63,5 +67,8 @@ ofxAubioMelBands::~ofxAubioMelBands()
 void ofxAubioMelBands::blockAudioIn()
 {
     aubio_pvoc_do(pv, aubio_input, spectrum);
+    if (bDoWhitening) {
+        //aubio_spectral_whitening_do(awhitening, spectrum);
+    }
     aubio_filterbank_do(fb, spectrum, bands);
 }

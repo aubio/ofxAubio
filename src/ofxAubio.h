@@ -23,3 +23,4 @@
 #include "ofxAubioPitch.h"
 #include "ofxAubioMelBands.h"
 #include "ofxAubioAttackClass.h"
+#include "ofxAubioFilterDetect.h"

@@ -37,6 +37,7 @@ void ofxAubioOnset::setup(string method, int buf_s, int hop_s, int samplerate)
     ofxAubioBlock::setup(method, buf_s, hop_s, samplerate);
     onset = new_aubio_onset((char_t*)method.c_str(),
                             buf_size, hop_size, samplerate);
+    aubio_onset_set_adaptive_whitening(onset, 0);
     if (onset) {
         threshold = aubio_onset_get_threshold(onset);
         ofLogNotice() << "created ofxAubioOnset(" << method

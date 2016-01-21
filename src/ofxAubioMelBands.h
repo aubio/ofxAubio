@@ -39,11 +39,14 @@ class ofxAubioMelBands : public ofxAubioBlock {
        int nBands;
        float *energies;
 
+       bool bDoWhitening;
+
     private:
        void blockAudioIn();
        // aubio stuff
        aubio_pvoc_t *pv;
        cvec_t *spectrum;
+       aubio_spectral_whitening_t *awhitening;
        aubio_filterbank_t *fb;
        fvec_t *bands;
 };

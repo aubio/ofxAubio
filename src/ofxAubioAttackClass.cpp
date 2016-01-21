@@ -31,7 +31,7 @@ ofxAubioAttackClass::ofxAubioAttackClass()
     : bands(NULL)
 {
     lag_onset = 3;
-    lag_beat = 3;
+    lag_beat = 10;
     min_band_onset = 3;
     min_band_beat = 3;
 }
