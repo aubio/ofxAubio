@@ -38,6 +38,7 @@ class ofApp : public ofBaseApp{
         ofxAubioBeat beat;
         ofxAubioMelBands bands;
         ofxAubioAttackClass attackClass;
+        ofxAubioFilterDetect filterDetect;
         int currentOnsetClass;
         int currentBeatClass;
 
@@ -59,4 +60,8 @@ class ofApp : public ofBaseApp{
 
         ofxPanel bandsGui;
         ofPolyline bandPlot;
+
+        ofxPanel filterDetectGui;
+        ofxIntSlider lowCut;
+        ofxIntSlider highCut;
 };

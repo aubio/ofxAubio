@@ -5,16 +5,18 @@
 void ofApp::setup(){
     // set the size of the window
     ofSetWindowShape(750, 250);
+    //ofSetFrameRate(30);
 
     int nOutputs = 2;
     int nInputs = 2;
-    //int sampleRate = 44100;
-    //int bufferSize = 256;
-    //int nBuffers = 4;
+    int sampleRate = 44100;
+    int bufferSize = 512;
+    int hopSize = 256;
+    int nBuffers = 4;
 
     // setup onset object
-    onset.setup();
-    //onset.setup("mkl", 2 * bufferSize, bufferSize, sampleRate);
+    //onset.setup();
+    onset.setup("default", bufferSize, hopSize, sampleRate);
     // listen to onset event
     ofAddListener(onset.gotOnset, this, &ofApp::onsetEvent);
 
@@ -23,17 +25,19 @@ void ofApp::setup(){
     //pitch.setup("yinfft", 8 * bufferSize, bufferSize, sampleRate);
 
     // setup beat object
-    beat.setup();
-    //beat.setup("default", 2 * bufferSize, bufferSize, samplerate);
+    //beat.setup();
+    beat.setup("default", bufferSize, hopSize, sampleRate);
     // listen to beat event
     ofAddListener(beat.gotBeat, this, &ofApp::beatEvent);
     ofAddListener(beat.gotTatum, this, &ofApp::tatumEvent);
 
     // setup mel bands object
-    bands.setup();
+    //bands.setup();
+    bands.setup("default", bufferSize, hopSize, sampleRate);
 
     // setup attackClass object
-    attackClass.setup();
+    //attackClass.setup();
+    attackClass.setup("default", bufferSize, hopSize, sampleRate);
     attackClass.setBands(bands);
 
     attackClass.setOnset(onset);
@@ -42,6 +46,9 @@ void ofApp::setup(){
     attackClass.setBeat(beat);
     ofAddListener(attackClass.gotBeatClass, this, &ofApp::beatClassEvent);
 
+    filterDetect.setup("default", bufferSize, hopSize, sampleRate);
+    filterDetect.setBands(bands);
+
     ofSoundStreamSetup(nOutputs, nInputs, this);
     //ofSoundStreamSetup(nOutputs, nInputs, sampleRate, bufferSize, nBuffers);
     //ofSoundStreamListDevices();
@@ -49,7 +56,7 @@ void ofApp::setup(){
     // setup the gui objects
     int start = 0;
     beatGui.setup("ofxAubioBeat", "settings.xml", start + 10, 10);
-    beatGui.add(bpm_tatumSignature.setup( "tatum signature", 4, 1, 64));
+    beatGui.add(bpm_tatumSignature.setup( "tatum signature", 1, 1, 64));
     beatGui.add(bpm.setup( "bpm", 0, 0, 250));
 
     start += 250;
@@ -69,6 +76,10 @@ void ofApp::setup(){
     for (int i = 0; i < 40; i++) {
         bandPlot.addVertex( 50 + i * 650 / 40., 240 - 100 * bands.energies[i]);
     }
+
+    filterDetectGui.setup("ofxAubioFilterDetect", "settings.xml", start + 10, 215);
+    filterDetectGui.add(lowCut.setup( "lowcut", 0, 0, bands.nBands));
+    filterDetectGui.add(highCut.setup( "hicut", 0, 0, bands.nBands));
 }
 
 void ofApp::exit(){
@@ -88,6 +99,8 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 
     // compute onset class
     attackClass.audioIn(input, bufferSize, nChannels);
+    // compute filter detection
+    filterDetect.audioIn(input, bufferSize, nChannels);
 }
 
 void audioOut(){
@@ -97,6 +110,9 @@ void audioOut(){
 void ofApp::update(){
     onset.setThreshold(onsetThreshold);
     beat.setTatumSignature((unsigned)bpm_tatumSignature);
+
+    lowCut = filterDetect.max_low_cutoff;
+    highCut = filterDetect.min_high_cutoff;
 }
 
 //--------------------------------------------------------------
@@ -149,6 +165,8 @@ void ofApp::draw(){
     ofSetColor(100, 200, 100);
     ofRect(190 + currentBeatClass * 7, 170, 10, 30);
 
+    // filter detect
+    filterDetectGui.draw();
 }
 
 //--------------------------------------------------------------
