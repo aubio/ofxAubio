@@ -1,6 +1,6 @@
 #! /bin/sh
 
-AUBIO_VERSION=0.4.2
+AUBIO_VERSION=0.4.4
 AUBIO_ZIPFRAM=aubio-$AUBIO_VERSION.darwin_framework.zip
 AUBIO_FRAMPATH=${AUBIO_ZIPFRAM%%.zip}
 
