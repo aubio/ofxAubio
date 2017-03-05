@@ -8,6 +8,6 @@ set -e
 set -x
 
 rm -rf $AUBIO_ZIPFRAM example_aubioDemo/$AUBIO_FRAMPATH
-curl -O http://aubio.org/bin/$AUBIO_VERSION/$AUBIO_ZIPFRAM
+curl -OL http://aubio.org/bin/$AUBIO_VERSION/$AUBIO_ZIPFRAM
 unzip -x $AUBIO_ZIPFRAM -d example_aubioDemo/
 open example_aubioDemo/$AUBIO_FRAMPATH
