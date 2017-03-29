@@ -15,7 +15,7 @@ Fetch `ofxAubio` and `aubio.framework` from inside your openFrameworks root:
     $ cd /path/to/of_root/addons
     $ git clone git://git.aubio.org/git/ofxAubio/
     $ cd ofxAubio
-    $ ./scripts/fetch_aubio_framework.sh
+    $ ./scripts/fetch_aubio_osx_framework.sh
 
 Select projectGenerator, select 'update project', then select the path of
 `example_aubioDemo`, `/path/to/of_root/addons/ofxAubio/example_aubioDemo`.
