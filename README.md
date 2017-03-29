@@ -23,6 +23,21 @@ Select projectGenerator, select 'update project', then select the path of
 Open `example_aubioDemo.xcodeproject`, drag `aubio.framework` into to it,
 placing it in `frameworks / 3rd party frameworks`.
 
+### Linux
+
+Clone `ofxAubio` in your addons folder:
+
+    $ cd /path/to/of_root/addons
+    $ git clone git://git.aubio.org/git/ofxAubio/
+
+Install `aubio` library and headers, on Debian/Ubuntu:
+
+    $ sudo sudo apt-get install libaubio-dev
+
+In your project edit `config.make`:
+
+    PROJECT_LDFLAGS=-laubio
+
 Project Homepage
 ----------------
 
